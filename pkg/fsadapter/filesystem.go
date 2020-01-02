@@ -1,7 +1,6 @@
 package fsadapter
 
 import (
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sync"
@@ -102,7 +101,7 @@ func (fs *AdapterFs) TempFile(dir, prefix string) (billy.File, error) {
 		return nil, err
 	}
 
-	f, err := ioutil.TempFile(dir, prefix)
+	f, err := afero.TempFile(fs.fs, dir, prefix)
 	if err != nil {
 		return nil, err
 	}
