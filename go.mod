@@ -1,4 +1,4 @@
-module github.com/jonfriesen/afero-billy-adapter
+module github.com/jonfriesen/go-billy-afero
 
 go 1.12
 
