@@ -118,9 +118,18 @@ func (fs *AdapterFs) RemoveAll(path string) error {
 
 func (fs *AdapterFs) Lstat(filename string) (os.FileInfo, error) {
 
-	info, _, err := fs.fs.(afero.Lstater).LstatIfPossible(filename)
+	info, success := fs.fs.(afero.Lstater)
+	if success {
+		s, _, err := info.LstatIfPossible(filename)
+		if err != nil {
+			return nil, err
+		}
 
-	return info, err
+		return s, nil
+
+	}
+
+	return fs.fs.Stat(filename)
 }
 
 func (fs *AdapterFs) Symlink(target, link string) error {
